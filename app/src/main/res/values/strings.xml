@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Vending Machine</string>
+    <string name="app_select">Select from three products:</string>
+    <string name="cola_descr">Cola for $1.00</string>
+    <string name="chips_descr">Chips for $.50</string>
+    <string name="candy_descr">Candy for $.65</string>
+    <string name="coin_descr">This vending machine accepts nickels, dimes, and quarters; and rejects pennies.</string>
+    <string name="app_label">Enter Coins: 5, 10 or 25</string>
+    <string name="app_button">Submit</string>
+    <string name="app_success">THANK YOU</string>
+</resources>
