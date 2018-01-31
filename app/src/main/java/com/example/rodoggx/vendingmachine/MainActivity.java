@@ -1,11 +1,14 @@
 package com.example.rodoggx.vendingmachine;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
@@ -14,6 +17,9 @@ public class MainActivity extends AppCompatActivity {
     CheckBox colaCheckbox, chipsCheckbox, candyCheckbox;
     EditText editText;
     Button button;
+    String cola, chips, candy, coinStr, priceStr;
+    double price = 0.0;
+    StringBuffer result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,20 +38,26 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                double price = 0.0;
                 //assign the checkbox value
-                StringBuffer result = new StringBuffer();
+                result = new StringBuffer();
+                cola = null;
+                chips = null;
+                candy = null;
+                price = 0.0;
 
                 if (colaCheckbox.isChecked()) {
-                    result.append("$1.00 Cola selected. ");
+                    cola = "$1.00 Cola";
+                    result.append(cola);
                     price += 1.00;
                 }
                 if (chipsCheckbox.isChecked()) {
-                    result.append("$.50 Chips selected. ");
+                    chips = "$.50 Chips";
+                    result.append(chips);
                     price += .50;
                 }
                 if (candyCheckbox.isChecked()) {
-                    result.append("$.65 Candy selected.");
+                    candy = "$.65 Candy";
+                    result.append(candy);
                     price += .65;
                 }
                 if (!colaCheckbox.isChecked()
@@ -55,15 +67,28 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 //assign edit text value
-                String coinStr = editText.getText().toString();
+                coinStr = editText.getText().toString();
+                priceStr = String.valueOf(price);
                 //display a toast
                 Toast toast = Toast.makeText(getBaseContext(),
-                        result.toString() + "\n" + "Total is " + price + "\n"
-                                 + "You submitted " + coinStr + "\nTHANK YOU",
+                        "Submitted",
                         Toast.LENGTH_SHORT);
                 toast.show();
+
+                startSecondActivity(view);
             }
         });
     }
 
+    public void startSecondActivity(View view) {
+        Intent startIntent = new Intent(this, SecondActivity.class);
+
+        startIntent.putExtra("submitted_coins", coinStr);
+        startIntent.putExtra("product_price", priceStr);
+        startIntent.putExtra("selected_cola", cola);
+        startIntent.putExtra("selected_chips", chips);
+        startIntent.putExtra("selected_candy", candy);
+
+        startActivity(startIntent);
+    }
 }
